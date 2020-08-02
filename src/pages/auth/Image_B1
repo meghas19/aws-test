@@ -1,0 +1,63 @@
+// import React, { Component } from 'react';
+// import { storage } from '../../helpers/firebase';
+
+// export default class Image extends Component {
+//     state = {
+//         files: [],
+//         setFiles: [],
+//     };
+
+//     onFileChange = (e) => {
+//         for (let i = 0; i < e.target.files.length; i++) {
+//             const newFile = e.target.files[i];
+//             newFile['id'] = Math.random();
+//             // add an "id" property to each File object
+//             this.state.setFiles((prevState) => [...prevState, newFile]);
+//         }
+//     };
+
+//     onUploadSubmission = (e) => {
+//         e.preventDefault(); // prevent page refreshing
+//         const promises = [];
+//         files.forEach((file) => {
+//             const uploadTask = storage.ref(`images/${this.state.file.name}`).put(this.state.file);
+//             uploadTask.on(
+//                 'state_changed',
+//                 (snapshot) => {
+//                     // progress function ...
+//                     const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+//                     // this.setState({ progress });
+//                     console.log(progress);
+//                 },
+//                 (error) => {
+//                     // Error function ...
+//                     console.log(error);
+//                 },
+//                 () => {
+//                     // complete function ...
+//                     storage
+//                         .ref('images')
+//                         .child(this.state.file.name)
+//                         .getDownloadURL()
+//                         .then((url) => {
+//                             console.log('url', url);
+//                         });
+//                 }
+//             );
+//         });
+//     };
+
+//     render() {
+//         return (
+//             <div>
+//                 <form>
+//                     <label>
+//                         Select Files
+//                         <input type="file" multiple onChange={onFileChange} />
+//                     </label>
+//                     <button onClick={onUploadSubmission}>Upload</button>
+//                 </form>
+//             </div>
+//         );
+//     }
+// }

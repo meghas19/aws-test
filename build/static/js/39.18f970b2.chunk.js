@@ -1,0 +1,2 @@
+(this["webpackJsonpshreyu-react"]=this["webpackJsonpshreyu-react"]||[]).push([[39],{637:function(e,t,s){"use strict";s.r(t);var n=s(0),r=s.n(n),a=s(33);class c extends n.Component{render(){const e=this.props.children||null;return r.a.createElement(n.Suspense,{fallback:r.a.createElement("div",{className:"text-center"})},e)}}t.default=Object(a.b)()(c)}}]);
+//# sourceMappingURL=39.18f970b2.chunk.js.map
