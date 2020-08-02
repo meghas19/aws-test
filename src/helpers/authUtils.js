@@ -76,7 +76,7 @@ const loginUserFireBase = async (email, password) => {
 		console.log("Name", Name);
 		localStorage.setItem("username", firebase.auth().currentUser.email);
 		localStorage.setItem("uid", firebase.auth().currentUser.uid);
-		localStorage.setItem("Name", firebase.auth().currentUser.uid);
+		localStorage.setItem("Name", Name);
 		// var docRef = db.collection("cities").doc("SF");
 
 		Name.get()
@@ -105,7 +105,6 @@ const registerUserFirebase = async (
 	email,
 	phone,
 	fname,
-	lname,
 	password,
 	appNumber
 ) => {
@@ -123,7 +122,6 @@ const registerUserFirebase = async (
 
 		await dataTest.set({
 			fname: fname,
-			lname: lname,
 			email: email,
 			phone: phone,
 			applicationNumber: appNumber,

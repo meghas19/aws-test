@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-// import Form1 from "../other/Form"
-// import { Row, Col } from 'reactstrap';
+
+import { useHistory } from "react-router-dom";
+
 import {
 	Row,
 	Col,
@@ -15,11 +16,6 @@ import {
 	Button,
 } from "reactstrap";
 
-// import Flatpickr from 'react-flatpickr';
-// import Select from 'react-select';
-
-// import PageTitle from '../../components/PageTitle';
-
 import { Component } from "react";
 import { Wizard, Steps, Step } from "react-albus";
 import MaskedInput from "react-text-mask";
@@ -27,6 +23,7 @@ import FileUploader from "../../components/FileUploader";
 
 import { render } from "react-dom";
 import { storage, auth, db } from "../../helpers/firebase";
+
 export default class ApplicationForm extends Component {
 	state = {
 		currentAppNumber: "",
@@ -201,9 +198,7 @@ export default class ApplicationForm extends Component {
 						.doc(localStorage.getItem("uid"));
 					data.set({
 						father_fname: this.state.father_fname,
-						father_lname: this.state.father_lname,
 						mother_fname: this.state.mother_fname,
-						mother_lname: this.state.mother_lname,
 						gender: this.state.gender,
 						dob: this.state.dob,
 						address: this.state.address,
@@ -213,7 +208,7 @@ export default class ApplicationForm extends Component {
 						pincode: this.state.pincode,
 					});
 
-					window.location.reload();
+					// window.location.reload();
 				} catch (error) {
 					console.log("Candidate_Profile");
 					console.log(error);
@@ -235,7 +230,7 @@ export default class ApplicationForm extends Component {
 						center3: this.state.center3,
 					});
 
-					window.location.reload();
+					// window.location.reload();
 				} catch (error) {
 					console.log("Candidate_Exam_Details");
 					console.log(error);
@@ -272,7 +267,7 @@ export default class ApplicationForm extends Component {
 						marksdeg2: this.state.marksdeg2,
 					});
 
-					window.location.reload();
+					// window.location.reload();
 				} catch (error) {
 					console.log("Candidate_Education");
 					console.log(error);
@@ -300,7 +295,7 @@ export default class ApplicationForm extends Component {
 							});
 						});
 
-					window.location.reload();
+					// window.location.reload();
 				} catch (error) {
 					console.log("Payment");
 					console.log(error);
@@ -316,10 +311,9 @@ export default class ApplicationForm extends Component {
 						.collection("Candidate_Profile")
 						.doc(localStorage.getItem("uid"));
 					data.set({
+						userId: localStorage.getItem("uid"),
 						father_fname: this.state.father_fname,
-						father_lname: this.state.father_lname,
 						mother_fname: this.state.mother_fname,
-						mother_lname: this.state.mother_lname,
 						gender: this.state.gender,
 						dob: this.state.dob,
 						address: this.state.address,
@@ -415,6 +409,8 @@ export default class ApplicationForm extends Component {
 				);
 			});
 		}
+		// history.push("");
+		window.location.replace("/candidate/UploadDocuments");
 	};
 
 	// handleToggleClick() {
@@ -452,169 +448,29 @@ export default class ApplicationForm extends Component {
 											<h4 className="header-title mt-0 mb-4">
 												Personal Details
 											</h4>
-											{/* 
-											<FormGroup
-												onChange={(e) => {
-													this.setState({
-														reappearing:
-															e.target.value,
-													});
-													if (
-														this.state
-															.reappearing ===
-														"Yes"
-													)
-														this.setState({
-															binReapper: true,
-														});
-													if (
-														this.state
-															.reappearing ===
-														"No"
-													)
-														this.setState({
-															binReapper: false,
-														});
-													console.log(e.target.value);
-												}}
-											>
-												<Row>
-													<Col md={3}>
-														<Label>
-															Reappearing
-															Candidate?
-														</Label>
-													</Col>
-													<Col md={9}>
-														<Row>
-															<Col md={6}>
-																<Input
-																	type="radio"
-																	onClick={
-																		this
-																			.state
-																			.reappearingFunc
-																	}
-																/>
-																Yes
-															</Col>
-															<Col md={6}>
-																<Input
-																	type="radio"
-																	name="reappearing"
-																	value="No"
-																/>
-																No
-															</Col>
-															{/* <Col md={6}>
-																<Input
-																	type="text"
-																	name="select"
-																	id="reappering"
-																	disabled={
-																		this
-																			.state
-																			.binReapper
-																	}
-																	placeholder={
-																		this
-																			.state
-																			.binReapper
-																			? ""
-																			: "Enter Previous Application Number"
-																	}
-																	value={
-																		this
-																			.state
-																			.reappearNumber
-																	}
-																	onChange={(
-																		e
-																	) => {
-																		this.setState(
-																			{
-																				reappearNumber:
-																					e
-																						.target
-																						.value,
-																			}
-																		);
-																		console.log(
-																			e
-																				.target
-																				.value
-																		);
-																	}}
-																></Input>
-															</Col> */}
-											{/* </Row>
-													</Col>
-												</Row>
-											</FormGroup> */}
 
 											<FormGroup row>
 												<Label for="fname" md={3}>
-													Candidate First Name
+													Candidate Name
 												</Label>
 												<Col md={9}>
-													<Row>
-														<Col md={6}>
-															<Input
-																type="text"
-																name="fname"
-																id="fname"
-																placeholder="Enter first name"
-																value={
-																	this.state
-																		.fname
-																}
-																onChange={(
-																	e
-																) => {
-																	this.setState(
-																		{
-																			fname:
-																				e
-																					.target
-																					.value,
-																		}
-																	);
-																	console.log(
-																		e.target
-																			.value
-																	);
-																}}
-															/>
-														</Col>
-														<Col md={6}>
-															<Input
-																type="text"
-																name="lname"
-																id="lname"
-																placeholder="Enter last name"
-																value={
-																	this.state
-																		.lname
-																}
-																onChange={(
-																	e
-																) => {
-																	this.setState(
-																		{
-																			lname:
-																				e
-																					.target
-																					.value,
-																		}
-																	);
-																	console.log(
-																		e.target
-																			.value
-																	);
-																}}
-															/>
-														</Col>
-													</Row>
+													<Input
+														type="text"
+														name="fname"
+														id="fname"
+														placeholder="Enter Candidate Full name"
+														value={this.state.fname}
+														onChange={(e) => {
+															this.setState({
+																fname:
+																	e.target
+																		.value,
+															});
+															console.log(
+																e.target.value
+															);
+														}}
+													/>
 												</Col>
 											</FormGroup>
 
@@ -676,64 +532,26 @@ export default class ApplicationForm extends Component {
 													Father's Name
 												</Label>
 												<Col md={9}>
-													<Row>
-														<Col md={6}>
-															<Input
-																type="text"
-																name="father_fname"
-																id="father_fname"
-																placeholder="Enter father's first name"
-																value={
-																	this.state
-																		.father_fname
-																}
-																onChange={(
-																	e
-																) => {
-																	this.setState(
-																		{
-																			father_fname:
-																				e
-																					.target
-																					.value,
-																		}
-																	);
-																	console.log(
-																		e.target
-																			.value
-																	);
-																}}
-															/>
-														</Col>
-														<Col md={6}>
-															<Input
-																type="text"
-																name="father_lname"
-																id="father_lname"
-																placeholder="Enter father's last name"
-																value={
-																	this.state
-																		.father_lname
-																}
-																onChange={(
-																	e
-																) => {
-																	this.setState(
-																		{
-																			father_lname:
-																				e
-																					.target
-																					.value,
-																		}
-																	);
-																	console.log(
-																		e.target
-																			.value
-																	);
-																}}
-															/>
-														</Col>
-													</Row>
+													<Input
+														type="text"
+														name="father_fname"
+														id="father_fname"
+														placeholder="Enter father's name"
+														value={
+															this.state
+																.father_fname
+														}
+														onChange={(e) => {
+															this.setState({
+																father_fname:
+																	e.target
+																		.value,
+															});
+															console.log(
+																e.target.value
+															);
+														}}
+													/>
 												</Col>
 											</FormGroup>
 
@@ -742,64 +560,26 @@ export default class ApplicationForm extends Component {
 													Mother's Name
 												</Label>
 												<Col md={9}>
-													<Row>
-														<Col md={6}>
-															<Input
-																type="text"
-																name="mother_fname"
-																id="mother_fname"
-																placeholder="Enter mother's first name"
-																value={
-																	this.state
-																		.mother_fname
-																}
-																onChange={(
-																	e
-																) => {
-																	this.setState(
-																		{
-																			mother_fname:
-																				e
-																					.target
-																					.value,
-																		}
-																	);
-																	console.log(
-																		e.target
-																			.value
-																	);
-																}}
-															/>
-														</Col>
-														<Col md={6}>
-															<Input
-																type="text"
-																name="mother_lname"
-																id="mother_lname"
-																placeholder="Enter mother's last name"
-																value={
-																	this.state
-																		.mother_lname
-																}
-																onChange={(
-																	e
-																) => {
-																	this.setState(
-																		{
-																			mother_lname:
-																				e
-																					.target
-																					.value,
-																		}
-																	);
-																	console.log(
-																		e.target
-																			.value
-																	);
-																}}
-															/>
-														</Col>
-													</Row>
+													<Input
+														type="text"
+														name="mother_fname"
+														id="mother_fname"
+														placeholder="Enter mother's name"
+														value={
+															this.state
+																.mother_fname
+														}
+														onChange={(e) => {
+															this.setState({
+																mother_fname:
+																	e.target
+																		.value,
+															});
+															console.log(
+																e.target.value
+															);
+														}}
+													/>
 												</Col>
 											</FormGroup>
 
@@ -868,42 +648,6 @@ export default class ApplicationForm extends Component {
 															);
 														}}
 													/>
-												</Col>
-											</FormGroup>
-
-											<FormGroup row>
-												<Label
-													for="exampleSelect"
-													md={3}
-												>
-													Category
-												</Label>
-												<Col md={9}>
-													<Input
-														type="select"
-														name="select"
-														id="exampleSelect"
-														placeholder="enter category"
-														value={
-															this.state.category
-														}
-														onChange={(e) => {
-															this.setState({
-																category:
-																	e.target
-																		.value,
-															});
-															console.log(
-																e.target.value
-															);
-														}}
-													>
-														<option></option>
-														<option>GM</option>
-														<option>OBC</option>
-														<option>SC</option>
-														<option>ST</option>
-													</Input>
 												</Col>
 											</FormGroup>
 
@@ -1014,6 +758,42 @@ export default class ApplicationForm extends Component {
 												</Col>
 											</FormGroup>
 
+											<FormGroup row>
+												<Label
+													for="exampleSelect"
+													md={3}
+												>
+													Category
+												</Label>
+												<Col md={9}>
+													<Input
+														type="select"
+														name="select"
+														id="exampleSelect"
+														placeholder="enter category"
+														value={
+															this.state.category
+														}
+														onChange={(e) => {
+															this.setState({
+																category:
+																	e.target
+																		.value,
+															});
+															console.log(
+																e.target.value
+															);
+														}}
+													>
+														<option></option>
+														<option>GM</option>
+														<option>OBC</option>
+														<option>SC</option>
+														<option>ST</option>
+													</Input>
+												</Col>
+											</FormGroup>
+
 											<FormGroup
 												onChange={(e) => {
 													this.setState({
@@ -1117,6 +897,53 @@ export default class ApplicationForm extends Component {
 													</Col>
 												</Row>
 											</FormGroup>
+
+											{/* <FormGroup
+                                                onChange={(e) => {
+                                                    this.setState({ reappearing: e.target.value });
+                                                    if (this.state.reappearing === 'Yes')
+                                                        this.setState({ binReapper: true });
+                                                    if (this.state.reappearing === 'No')
+                                                        this.setState({ binReapper: false });
+                                                    console.log(e.target.value);
+                                                }}>
+                                                <Row>
+                                                    <Col md={3}>
+                                                        <Label>Reappearing Candidate?</Label>
+                                                    </Col>
+                                                    <Col md={9}>
+                                                        <Row>
+                                                            <Col md={3}>
+                                                                <Input type="radio" name="reappearing" value="Yes" />
+                                                                Yes
+                                                            </Col>
+                                                            <Col md={3}>
+                                                                <Input type="radio" name="reappearing" value="No" />
+                                                                No
+                                                            </Col>
+                                                            <Col md={6}>
+                                                                <Input
+                                                                    type="text"
+                                                                    name="select"
+                                                                    id="reappering"
+                                                                    disabled={this.state.binReapper}
+                                                                    placeholder={
+                                                                        this.state.binReapper
+                                                                            ? ''
+                                                                            : 'Enter Previous Application Number'
+                                                                    }
+                                                                    value={this.state.reappearNumber}
+                                                                    onChange={(e) => {
+                                                                        this.setState({
+                                                                            reappearNumber: e.target.value,
+                                                                        });
+                                                                        console.log(e.target.value);
+                                                                    }}></Input>
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>
+                                                </Row>
+                                            </FormGroup> */}
 
 											<ul className="list-inline wizard mb-0">
 												<li className="next list-inline-item float-right">
@@ -1385,24 +1212,19 @@ export default class ApplicationForm extends Component {
 														/>
 													</Col>
 												</FormGroup>
-												// FileUpload Here //gcuvbk
-												<FormGroup row>
-													<Label for="cert10" md={3}>
-														Certificate / Marks
-														sheet
-													</Label>
-													<Col md={9}>
-														<Input
-															type="file"
-															name="cert10"
-															id="cert10"
-															onChange={
-																this
-																	.cert10_handleChange
-															}
-														/>
-													</Col>
-												</FormGroup>
+												{/* <FormGroup row>
+                                                    <Label for="cert10" md={3}>
+                                                        Certificate / Marks sheet
+                                                    </Label>
+                                                    <Col md={9}>
+                                                        <Input
+                                                            type="file"
+                                                            name="cert10"
+                                                            id="cert10"
+                                                            onChange={this.cert10_handleChange}
+                                                        />
+                                                    </Col>
+                                                </FormGroup> */}
 											</div>
 
 											<div id="class12">
@@ -1648,41 +1470,30 @@ export default class ApplicationForm extends Component {
 														/>
 													</Col>
 												</FormGroup>
-												// FileUpload Here
-												<FormGroup row>
-													<Label for="cert12" md={3}>
-														Certificate / Marks
-														sheet
-													</Label>
-													<Col md={9}>
-														<Input
-															type="file"
-															name="cert12"
-															id="cert12"
-															// placeholder="enter register no."
-															value={
-																this.state
-																	.cert12
-															}
-															onChange={(e) => {
-																this.setState({
-																	cert12:
-																		e.target
-																			.value,
-																});
-																console.log(
-																	e.target
-																		.value
-																);
-															}}
-														/>
-													</Col>
-												</FormGroup>
+												{/* // FileUpload Here
+                                                <FormGroup row>
+                                                    <Label for="cert12" md={3}>
+                                                        Certificate / Marks sheet
+                                                    </Label>
+                                                    <Col md={9}>
+                                                        <Input
+                                                            type="file"
+                                                            name="cert12"
+                                                            id="cert12"
+                                                            // placeholder="enter register no."
+                                                            value={this.state.cert12}
+                                                            onChange={(e) => {
+                                                                this.setState({ cert12: e.target.value });
+                                                                console.log(e.target.value);
+                                                            }}
+                                                        />
+                                                    </Col>
+                                                </FormGroup> */}
 											</div>
 
 											<div id="degree1">
 												<h5 className="header-title mt-7 mb-2">
-													Degree1
+													Degree
 												</h5>
 
 												<FormGroup row>
@@ -2032,542 +1843,263 @@ export default class ApplicationForm extends Component {
 													</Col>
 												</FormGroup>
 
-												<FormGroup row>
-													<Label
-														for="certdeg1"
-														md={3}
-													>
-														Certificate / Marks
-														sheet
-													</Label>
-													<Col md={9}>
-														<Input
-															type="file"
-															name="certdeg1"
-															id="certdeg1"
-															disabled={
-																this.state
-																	.binDeg1
-															}
-															// placeholder="enter register no."
-															value={
-																this.state
-																	.certdeg1
-															}
-															onChange={(e) => {
-																this.setState({
-																	certdeg1:
-																		e.target
-																			.value,
-																});
-																console.log(
-																	e.target
-																		.value
-																);
-															}}
-														/>
-													</Col>
-												</FormGroup>
+												{/* <FormGroup row>
+                                                    <Label for="certdeg1" md={3}>
+                                                        Certificate / Marks sheet
+                                                    </Label>
+                                                    <Col md={9}>
+                                                        <Input
+                                                            type="file"
+                                                            name="certdeg1"
+                                                            id="certdeg1"
+                                                            disabled={this.state.binDeg1}
+                                                            // placeholder="enter register no."
+                                                            value={this.state.certdeg1}
+                                                            onChange={(e) => {
+                                                                this.setState({ certdeg1: e.target.value });
+                                                                console.log(e.target.value);
+                                                            }}
+                                                        />
+                                                    </Col>
+                                                </FormGroup> */}
 											</div>
 
-											<FormGroup
-												onChange={(e) => {
-													this.setState({
-														degree2present:
-															e.target.value,
-													});
-													if (
-														this.state
-															.degree2present ===
-														"Yes"
-													)
-														this.setState({
-															binDeg2pres: true,
-														});
-													if (
-														this.state
-															.degree2present ===
-														"No"
-													)
-														this.setState({
-															binDeg2pres: false,
-														});
-													console.log(e.target.value);
-												}}
-											>
-												<Row>
-													<Col md={4}>
-														<Label>
-															Add Another Degree
-															Details?
-														</Label>
-													</Col>
-													<Col md={8}>
-														<Row>
-															<Col md={6}>
-																<Input
-																	type="radio"
-																	name="degree2present"
-																	value="Yes"
-																/>
-																Yes
-															</Col>
-															<Col md={6}>
-																<Input
-																	type="radio"
-																	name="degree2present"
-																	value="No"
-																/>
-																No
-															</Col>
-														</Row>
-													</Col>
-												</Row>
-											</FormGroup>
+											{/* <FormGroup
+                                                onChange={(e) => {
+                                                    this.setState({ degree2present: e.target.value });
+                                                    if (this.state.degree2present === 'Yes')
+                                                        this.setState({ binDeg2pres: true });
+                                                    if (this.state.degree2present === 'No')
+                                                        this.setState({ binDeg2pres: false });
+                                                    console.log(e.target.value);
+                                                }}>
+                                                <Row>
+                                                    <Col md={4}>
+                                                        <Label>Add Another Degree Details?</Label>
+                                                    </Col>
+                                                    <Col md={8}>
+                                                        <Row>
+                                                            <Col md={6}>
+                                                                <Input type="radio" name="degree2present" value="Yes" />
+                                                                Yes
+                                                            </Col>
+                                                            <Col md={6}>
+                                                                <Input type="radio" name="degree2present" value="No" />
+                                                                No
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>
+                                                </Row>
+                                            </FormGroup>
 
-											<div id="degree2">
-												<h5 className="header-title mt-7 mb-2">
-													Degree 2
-												</h5>
+                                            <div id="degree2">
+                                                <h5 className="header-title mt-7 mb-2">Degree 2</h5>
 
-												<FormGroup row>
-													<Label for="degree" md={3}>
-														Degree Name
-													</Label>
-													<Col md={9}>
-														<Input
-															type="text"
-															name="nameofdeg2"
-															id="nameofdeg2"
-															placeholder={
-																this.state
-																	.binDeg2pres
-																	? ""
-																	: "enter name of the degree"
-															}
-															disabled={
-																this.state
-																	.binDeg2pres
-															}
-															value={
-																this.state
-																	.nameofdeg2
-															}
-															onChange={(e) => {
-																this.setState({
-																	nameofdeg2:
-																		e.target
-																			.value,
-																});
-																console.log(
-																	e.target
-																		.value
-																);
-															}}
-														/>
-													</Col>
-												</FormGroup>
+                                                <FormGroup row>
+                                                    <Label for="degree" md={3}>
+                                                        Degree Name
+                                                    </Label>
+                                                    <Col md={9}>
+                                                        <Input
+                                                            type="text"
+                                                            name="nameofdeg2"
+                                                            id="nameofdeg2"
+                                                            placeholder={
+                                                                this.state.binDeg2pres ? '' : 'enter name of the degree'
+                                                            }
+                                                            disabled={this.state.binDeg2pres}
+                                                            value={this.state.nameofdeg2}
+                                                            onChange={(e) => {
+                                                                this.setState({ nameofdeg2: e.target.value });
+                                                                console.log(e.target.value);
+                                                            }}
+                                                        />
+                                                    </Col>
+                                                </FormGroup>
 
-												<FormGroup row>
-													<Label
-														for="boarddeg2"
-														md={3}
-													>
-														University / Board
-													</Label>
-													<Col md={9}>
-														<Input
-															type="text"
-															name="boarddeg2"
-															id="boarddeg2"
-															placeholder={
-																this.state
-																	.binDeg2pres
-																	? ""
-																	: "enter board"
-															}
-															disabled={
-																this.state
-																	.binDeg2pres
-															}
-															value={
-																this.state
-																	.boarddeg2
-															}
-															onChange={(e) => {
-																this.setState({
-																	boarddeg2:
-																		e.target
-																			.value,
-																});
-																console.log(
-																	e.target
-																		.value
-																);
-															}}
-														/>
-													</Col>
-												</FormGroup>
+                                                <FormGroup row>
+                                                    <Label for="boarddeg2" md={3}>
+                                                        University / Board
+                                                    </Label>
+                                                    <Col md={9}>
+                                                        <Input
+                                                            type="text"
+                                                            name="boarddeg2"
+                                                            id="boarddeg2"
+                                                            placeholder={this.state.binDeg2pres ? '' : 'enter board'}
+                                                            disabled={this.state.binDeg2pres}
+                                                            value={this.state.boarddeg2}
+                                                            onChange={(e) => {
+                                                                this.setState({ boarddeg2: e.target.value });
+                                                                console.log(e.target.value);
+                                                            }}
+                                                        />
+                                                    </Col>
+                                                </FormGroup>
 
-												<FormGroup
-													disabled={
-														this.state.binDeg2pres
-													}
-													onChange={(e) => {
-														this.setState({
-															degree2status:
-																e.target.value,
-														});
-														if (
-															this.state
-																.degree2status ===
-															"Passed"
-														)
-															this.setState({
-																binDeg2: true,
-															});
-														if (
-															this.state
-																.degree2status ===
-															"Appearing"
-														)
-															this.setState({
-																binDeg2: false,
-															});
-														console.log(
-															e.target.value
-														);
-													}}
-												>
-													<Row>
-														<Col md={4}>
-															<Label>
-																Status
-															</Label>
-														</Col>
-														<Col md={8}>
-															<Row>
-																<Col md={6}>
-																	<Input
-																		type="radio"
-																		name="degree2status"
-																		value="Passed"
-																		disabled={
-																			this
-																				.state
-																				.binDeg2pres
-																		}
-																	/>
-																	Passed
-																</Col>
-																<Col md={6}>
-																	<Input
-																		type="radio"
-																		name="degree2status"
-																		value="Appearing"
-																		disabled={
-																			this
-																				.state
-																				.binDeg2pres
-																		}
-																	/>
-																	Appearing
-																</Col>
-															</Row>
-														</Col>
-													</Row>
-												</FormGroup>
+                                                <FormGroup
+                                                    disabled={this.state.binDeg2pres}
+                                                    onChange={(e) => {
+                                                        this.setState({ degree2status: e.target.value });
+                                                        if (this.state.degree2status === 'Passed')
+                                                            this.setState({ binDeg2: true });
+                                                        if (this.state.degree2status === 'Appearing')
+                                                            this.setState({ binDeg2: false });
+                                                        console.log(e.target.value);
+                                                    }}>
+                                                    <Row>
+                                                        <Col md={4}>
+                                                            <Label>Status</Label>
+                                                        </Col>
+                                                        <Col md={8}>
+                                                            <Row>
+                                                                <Col md={6}>
+                                                                    <Input
+                                                                        type="radio"
+                                                                        name="degree2status"
+                                                                        value="Passed"
+                                                                        disabled={this.state.binDeg2pres}
+                                                                    />
+                                                                    Passed
+                                                                </Col>
+                                                                <Col md={6}>
+                                                                    <Input
+                                                                        type="radio"
+                                                                        name="degree2status"
+                                                                        value="Appearing"
+                                                                        disabled={this.state.binDeg2pres}
+                                                                    />
+                                                                    Appearing
+                                                                </Col>
+                                                            </Row>
+                                                        </Col>
+                                                    </Row>
+                                                </FormGroup>
 
-												<FormGroup row>
-													<Label for="regdeg2" md={3}>
-														Register No.
-													</Label>
-													<Col md={9}>
-														<Input
-															type="text"
-															name="regdeg2"
-															id="regdeg2"
-															placeholder={
-																this.state
-																	.binDeg2pres
-																	? ""
-																	: "enter register no"
-															}
-															disabled={
-																this.state
-																	.binDeg2 ||
-																this.state
-																	.binDeg2pres
-															}
-															value={
-																this.state
-																	.regdeg2
-															}
-															onChange={(e) => {
-																this.setState({
-																	regdeg2:
-																		e.target
-																			.value,
-																});
-																console.log(
-																	e.target
-																		.value
-																);
-															}}
-														/>
-													</Col>
-												</FormGroup>
+                                                <FormGroup row>
+                                                    <Label for="regdeg2" md={3}>
+                                                        Register No.
+                                                    </Label>
+                                                    <Col md={9}>
+                                                        <Input
+                                                            type="text"
+                                                            name="regdeg2"
+                                                            id="regdeg2"
+                                                            placeholder={
+                                                                this.state.binDeg2pres ? '' : 'enter register no'
+                                                            }
+                                                            disabled={this.state.binDeg2 || this.state.binDeg2pres}
+                                                            value={this.state.regdeg2}
+                                                            onChange={(e) => {
+                                                                this.setState({ regdeg2: e.target.value });
+                                                                console.log(e.target.value);
+                                                            }}
+                                                        />
+                                                    </Col>
+                                                </FormGroup>
 
-												<FormGroup row>
-													<Label for="yopdeg2" md={3}>
-														Year of Pass out
-													</Label>
-													<Col md={9}>
-														<Input
-															type="select"
-															name="yopdeg2"
-															id="yopdeg2"
-															placeholder={
-																this.state
-																	.binDeg2pres
-																	? ""
-																	: "enter year of pass out"
-															}
-															disabled={
-																this.state
-																	.binDeg2 ||
-																this.state
-																	.binDeg2pres
-															}
-															value={
-																this.state
-																	.yopdeg2
-															}
-															onChange={(e) => {
-																this.setState({
-																	yopdeg2:
-																		e.target
-																			.value,
-																});
-																console.log(
-																	e.target
-																		.value
-																);
-															}}
-														>
-															<option></option>
-															<option>
-																1981
-															</option>
-															<option>
-																1982
-															</option>
-															<option>
-																1983
-															</option>
-															<option>
-																1984
-															</option>
-															<option>
-																1985
-															</option>
-															<option>
-																1986
-															</option>
-															<option>
-																1987
-															</option>
-															<option>
-																1988
-															</option>
-															<option>
-																1989
-															</option>
-															<option>
-																1990
-															</option>
-															<option>
-																1991
-															</option>
-															<option>
-																1992
-															</option>
-															<option>
-																1993
-															</option>
-															<option>
-																1994
-															</option>
-															<option>
-																1995
-															</option>
-															<option>
-																1996
-															</option>
-															<option>
-																1997
-															</option>
-															<option>
-																1998
-															</option>
-															<option>
-																1999
-															</option>
-															<option>
-																2000
-															</option>
-															<option>
-																2001
-															</option>
-															<option>
-																2002
-															</option>
-															<option>
-																2003
-															</option>
-															<option>
-																2004
-															</option>
-															<option>
-																2005
-															</option>
-															<option>
-																2006
-															</option>
-															<option>
-																2007
-															</option>
-															<option>
-																2008
-															</option>
-															<option>
-																2009
-															</option>
-															<option>
-																2010
-															</option>
-															<option>
-																2011
-															</option>
-															<option>
-																2012
-															</option>
-															<option>
-																2013
-															</option>
-															<option>
-																2014
-															</option>
-															<option>
-																2015
-															</option>
-															<option>
-																2016
-															</option>
-															<option>
-																2017
-															</option>
-															<option>
-																2018
-															</option>
-															<option>
-																2019
-															</option>
-															<option>
-																2020
-															</option>
-														</Input>
-													</Col>
-												</FormGroup>
+                                                <FormGroup row>
+                                                    <Label for="yopdeg2" md={3}>
+                                                        Year of Pass out
+                                                    </Label>
+                                                    <Col md={9}>
+                                                        <Input
+                                                            type="select"
+                                                            name="yopdeg2"
+                                                            id="yopdeg2"
+                                                            placeholder={
+                                                                this.state.binDeg2pres ? '' : 'enter year of pass out'
+                                                            }
+                                                            disabled={this.state.binDeg2 || this.state.binDeg2pres}
+                                                            value={this.state.yopdeg2}
+                                                            onChange={(e) => {
+                                                                this.setState({ yopdeg2: e.target.value });
+                                                                console.log(e.target.value);
+                                                            }}>
+                                                            <option></option>
+                                                            <option>1981</option>
+                                                            <option>1982</option>
+                                                            <option>1983</option>
+                                                            <option>1984</option>
+                                                            <option>1985</option>
+                                                            <option>1986</option>
+                                                            <option>1987</option>
+                                                            <option>1988</option>
+                                                            <option>1989</option>
+                                                            <option>1990</option>
+                                                            <option>1991</option>
+                                                            <option>1992</option>
+                                                            <option>1993</option>
+                                                            <option>1994</option>
+                                                            <option>1995</option>
+                                                            <option>1996</option>
+                                                            <option>1997</option>
+                                                            <option>1998</option>
+                                                            <option>1999</option>
+                                                            <option>2000</option>
+                                                            <option>2001</option>
+                                                            <option>2002</option>
+                                                            <option>2003</option>
+                                                            <option>2004</option>
+                                                            <option>2005</option>
+                                                            <option>2006</option>
+                                                            <option>2007</option>
+                                                            <option>2008</option>
+                                                            <option>2009</option>
+                                                            <option>2010</option>
+                                                            <option>2011</option>
+                                                            <option>2012</option>
+                                                            <option>2013</option>
+                                                            <option>2014</option>
+                                                            <option>2015</option>
+                                                            <option>2016</option>
+                                                            <option>2017</option>
+                                                            <option>2018</option>
+                                                            <option>2019</option>
+                                                            <option>2020</option>
+                                                        </Input>
+                                                    </Col>
+                                                </FormGroup>
 
-												<FormGroup row>
-													<Label
-														for="marksdeg2"
-														md={3}
-													>
-														Percentage
-													</Label>
-													<Col md={9}>
-														<MaskedInput
-															mask={[
-																/\d/,
-																/\d/,
-																".",
-																/\d/,
-																/\d/,
-																"%",
-															]}
-															placeholder={
-																this.state
-																	.binDeg2pres
-																	? ""
-																	: "__.__%"
-															}
-															disabled={
-																this.state
-																	.binDeg2 ||
-																this.state
-																	.binDeg2pres
-															}
-															className="form-control"
-															value={
-																this.state
-																	.marksdeg2
-															}
-															onChange={(e) => {
-																this.setState({
-																	marksdeg2:
-																		e.target
-																			.value,
-																});
-																console.log(
-																	e.target
-																		.value
-																);
-															}}
-														/>
-													</Col>
-												</FormGroup>
+                                                <FormGroup row>
+                                                    <Label for="marksdeg2" md={3}>
+                                                        Percentage
+                                                    </Label>
+                                                    <Col md={9}>
+                                                        <MaskedInput
+                                                            mask={[/\d/, /\d/, '.', /\d/, /\d/, '%']}
+                                                            placeholder={this.state.binDeg2pres ? '' : '__.__%'}
+                                                            disabled={this.state.binDeg2 || this.state.binDeg2pres}
+                                                            className="form-control"
+                                                            value={this.state.marksdeg2}
+                                                            onChange={(e) => {
+                                                                this.setState({ marksdeg2: e.target.value });
+                                                                console.log(e.target.value);
+                                                            }}
+                                                        />
+                                                    </Col>
+                                                </FormGroup>
 
-												<FormGroup row>
-													<Label
-														for="certdeg2"
-														md={3}
-													>
-														Certificate / Marks
-														sheet
-													</Label>
-													<Col md={9}>
-														<Input
-															type="file"
-															name="certdeg2"
-															id="certdeg2"
-															disabled={
-																this.state
-																	.binDeg2 ||
-																this.state
-																	.binDeg2pres
-															}
-															// placeholder="enter register no."
-															value={
-																this.state
-																	.certdeg2
-															}
-															onChange={(e) => {
-																this.setState({
-																	certdeg2:
-																		e.target
-																			.value,
-																});
-																console.log(
-																	e.target
-																		.value
-																);
-															}}
-														/>
-													</Col>
-												</FormGroup>
-											</div>
+                                                <FormGroup row>
+                                                    <Label for="certdeg2" md={3}>
+                                                        Certificate / Marks sheet
+                                                    </Label>
+                                                    <Col md={9}>
+                                                        <Input
+                                                            type="file"
+                                                            name="certdeg2"
+                                                            id="certdeg2"
+                                                            disabled={this.state.binDeg2 || this.state.binDeg2pres}
+                                                            // placeholder="enter register no."
+                                                            value={this.state.certdeg2}
+                                                            onChange={(e) => {
+                                                                this.setState({ certdeg2: e.target.value });
+                                                                console.log(e.target.value);
+                                                            }}
+                                                        />
+                                                    </Col>
+                                                </FormGroup>
+                                            </div> */}
 
 											<ul className="list-inline wizard mb-0">
 												<li className="previous list-inline-item">
@@ -2990,138 +2522,99 @@ export default class ApplicationForm extends Component {
 													</Button>
 												</li>
 
+												{/* <li className="next list-inline-item float-right">
+                                                    <Button onClick={next} color="success">
+                                                        Next
+                                                    </Button>{' '}
+                                                </li> */}
 												<li className="next list-inline-item float-right">
 													<Button
-														onClick={next}
+														onClick={this.sendData}
 														color="success"
 													>
-														Next
-													</Button>{" "}
-												</li>
-											</ul>
-										</Form>
-									)}
-								/>
-								<Step
-									id="demo1"
-									render={({ next, previous }) => (
-										<Form>
-											<h4 className="header-title mt-0 mb-4">
-												Photo and Sign
-											</h4>
-
-											<React.Fragment>
-												<Row>
-													<Col>
-														<Card>
-															<CardBody>
-																<h4 className="header-title mt-0 mb-1">
-																	Passport
-																	size photo
-																	Upload
-																</h4>
-																<p className="sub-header">
-																	(3 kb – 40
-																	kb (140
-																	pixel height
-																	X 110 pixel
-																	) JPG format
-																	)
-																</p>
-
-																<FileUploader
-																	value={
-																		this
-																			.state
-																			.photo
-																	}
-																	onFileUpload={(
-																		files
-																	) => {
-																		this.setState(
-																			{
-																				photo:
-																					files[0],
-																			}
-																		);
-																		console.log(
-																			files[0]
-																		);
-																		// console.log(files);
-																	}}
-																/>
-															</CardBody>
-														</Card>
-													</Col>
-												</Row>
-											</React.Fragment>
-
-											<React.Fragment>
-												<Row>
-													<Col>
-														<Card>
-															<CardBody>
-																<h4 className="header-title mt-0 mb-1">
-																	Signature
-																	Upload
-																</h4>
-																<p className="sub-header">
-																	(1 kb – 40
-																	kb (110
-																	pixel height
-																	X 140 pixel)
-																	JPG format)
-																</p>
-
-																<FileUploader
-																	value={
-																		this
-																			.state
-																			.sign
-																	}
-																	onFileUpload={(
-																		files
-																	) => {
-																		this.setState(
-																			{
-																				sign:
-																					files[0],
-																			}
-																		);
-																		console.log(
-																			files[0]
-																		);
-																		// console.log(files);
-																	}}
-																/>
-															</CardBody>
-														</Card>
-													</Col>
-												</Row>
-											</React.Fragment>
-
-											<ul className="list-inline wizard mb-0">
-												<li className="previous list-inline-item">
-													<Button
-														onClick={previous}
-														color="info"
-													>
-														Previous
+														Submit
 													</Button>
 												</li>
-
-												<li className="next list-inline-item float-right">
-													<Button
-														onClick={next}
-														color="success"
-													>
-														Next
-													</Button>{" "}
-												</li>
 											</ul>
 										</Form>
 									)}
 								/>
+								{/* <Step
+                                    id="demo1"
+                                    render={({ next, previous }) => (
+                                        <Form>
+                                            <h4 className="header-title mt-0 mb-4">Photo and Sign</h4>
+
+                                            <React.Fragment>
+                                                <Row>
+                                                    <Col>
+                                                        <Card>
+                                                            <CardBody>
+                                                                <h4 className="header-title mt-0 mb-1">
+                                                                    Passport size photo Upload
+                                                                </h4>
+                                                                <p className="sub-header">
+                                                                    (3 kb – 40 kb (140 pixel height X 110 pixel ) JPG
+                                                                    format )
+                                                                </p>
+
+                                                                <FileUploader
+                                                                    value={this.state.photo}
+                                                                    onFileUpload={(files) => {
+                                                                        this.setState({ photo: files[0] });
+                                                                        console.log(files[0]);
+                                                                        // console.log(files);
+                                                                    }}
+                                                                />
+                                                            </CardBody>
+                                                        </Card>
+                                                    </Col>
+                                                </Row>
+                                            </React.Fragment>
+
+                                            <React.Fragment>
+                                                <Row>
+                                                    <Col>
+                                                        <Card>
+                                                            <CardBody>
+                                                                <h4 className="header-title mt-0 mb-1">
+                                                                    Signature Upload
+                                                                </h4>
+                                                                <p className="sub-header">
+                                                                    (1 kb – 40 kb (110 pixel height X 140 pixel) JPG
+                                                                    format)
+                                                                </p>
+
+                                                                <FileUploader
+                                                                    value={this.state.sign}
+                                                                    onFileUpload={(files) => {
+                                                                        this.setState({ sign: files[0] });
+                                                                        console.log(files[0]);
+                                                                        // console.log(files);
+                                                                    }}
+                                                                />
+                                                            </CardBody>
+                                                        </Card>
+                                                    </Col>
+                                                </Row>
+                                            </React.Fragment>
+
+                                            <ul className="list-inline wizard mb-0">
+                                                <li className="previous list-inline-item">
+                                                    <Button onClick={previous} color="info">
+                                                        Previous
+                                                    </Button>
+                                                </li>
+
+                                                <li className="next list-inline-item float-right">
+                                                    <Button onClick={next} color="success">
+                                                        Next
+                                                    </Button>{' '}
+                                                </li>
+                                            </ul>
+                                        </Form>
+                                    )}
+                                /> */}
 
 								<Step
 									id="demo2"

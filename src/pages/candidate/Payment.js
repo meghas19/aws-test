@@ -18,7 +18,7 @@ function loadScript(src) {
     });
 }
 
-const __DEV__ = document.domain === "18.223.114.212";
+const _DEV_ = document.domain === "18.223.114.212";
 
 const Payment = () => {
     const name = "User_demo";
@@ -40,7 +40,7 @@ const Payment = () => {
         console.log(data);
 
         const options = {
-            key: __DEV__
+            key: _DEV_
                 ? "rzp_test_hXdPUh3IoDNxi3"
                 : "rzp_test_hXdPUh3IoDNxi3",
             currency: data.currency,

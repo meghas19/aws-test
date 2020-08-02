@@ -17,7 +17,7 @@ export default class test extends Component {
 		mother_lname: "",
 		resultDate: "",
 
-		currentAppNumber: "",
+		currentAppNumber: "202000006",
 		email: "",
 		phone: "",
 		dob: "",
@@ -74,47 +74,98 @@ export default class test extends Component {
 		center3: "",
 	};
 
-	// componentDidMount = () => {
-	//     db
-	//         .collection('users')
-	//         .doc(auth.currentUser.uid)
-	//         .get()
-	//         .then((res) => {
-	//             this.setState({ candidateName: res.data().fname + ' ' + res.data().lname });
-	//             console.log('users WORKS', res.data());
-	//             console.log('USER NAME', this.state.candidateName);
-	//         }).catch = (err) => {
-	//         console.log('error');
-	//     };
-	//     db
-	//         .collection('Candidate_Profile')
-	//         .doc(auth.currentUser.uid)
-	//         .get()
-	//         .then((res) => {
-	//             this.setState({ category: res.data().category });
-	//             this.setState({ gender: res.data().gender });
-	//             this.setState({ father_fname: res.data().father_fname });
-	//             this.setState({ father_lname: res.data().father_lname });
-	//             this.setState({ mother_fname: res.data().mother_fname });
-	//             this.setState({ mother_lname: res.data().mother_lname });
+	componentDidMount = () => {
+		var uidVar = localStorage.getItem("uid");
+		this.setState({ uid: uidVar });
+		console.log("USER ID", this.state.uid);
+		db
+			.collection("users")
+			.doc(localStorage.getItem("uid"))
+			.get()
+			.then((res) => {
+				this.setState({
+					currentAppNumber: res.data().currentAppNumber,
+				});
+				this.setState({ fname: res.data().fname });
+				this.setState({ email: res.data().email });
+				this.setState({ phone: res.data().phone });
 
-	//             console.log('Candidate_Profile WORKS', res.data());
-	//         }).catch = (err) => {
-	//         console.log('error');
-	//     };
+				console.log("users WORKS", res.data());
+			}).catch = (err) => {
+			console.log("error");
+		};
+		db
+			.collection("Candidate_Profile")
+			.doc(localStorage.getItem("uid"))
+			.get()
+			.then((res) => {
+				this.setState({ father_fname: res.data().father_fname });
+				this.setState({ father_lname: res.data().father_lname });
+				this.setState({ mother_fname: res.data().mother_fname });
+				this.setState({ mother_lname: res.data().mother_lname });
+				this.setState({ gender: res.data().gender });
+				this.setState({ dob: res.data().dob });
+				this.setState({ address: res.data().address });
+				this.setState({ category: res.data().category });
+				this.setState({ State: res.data().State });
+				this.setState({ district: res.data().district });
+				this.setState({ pincode: res.data().pincode });
 
-	//     db
-	//         .collection('Global_Variables')
-	//         .doc('result')
-	//         .get()
-	//         .then((res) => {
-	//             this.setState({ resultDate: res.data().resultDate });
+				console.log("Candidate_Profile WORKS", res.data());
+			}).catch = (err) => {
+			console.log("error");
+		};
+		db
+			.collection("Candidate_Exam_Details")
+			.doc(localStorage.getItem("uid"))
+			.get()
+			.then((res) => {
+				this.setState({ disability: res.data().disability });
+				this.setState({ disability_type: res.data().disability_type });
+				this.setState({ paper: res.data().paper });
+				this.setState({ language1: res.data().language1 });
+				this.setState({ language2: res.data().language2 });
+				this.setState({ paper2subj: res.data().paper2subj });
+				this.setState({ center1: res.data().center1 });
+				this.setState({ center2: res.data().center2 });
+				this.setState({ center3: res.data().center3 });
 
-	//             console.log('Global_Variables WORKS', res.data());
-	//         }).catch = (err) => {
-	//         console.log('error');
-	//     };
-	// };
+				console.log("Candidate_Exam_Details WORKS", res.data());
+			}).catch = (err) => {
+			console.log("error");
+		};
+		db
+			.collection("Candidate_Education")
+			.doc(localStorage.getItem("uid"))
+			.get()
+			.then((res) => {
+				this.setState({ board10: res.data().board10 });
+				this.setState({ reg10: res.data().reg10 });
+				this.setState({ yop10: res.data().yop10 });
+				this.setState({ marks10: res.data().marks10 });
+				this.setState({ board12: res.data().board12 });
+				this.setState({ reg12: res.data().reg12 });
+				this.setState({ yop12: res.data().yop12 });
+				this.setState({ marks12: res.data().marks12 });
+				this.setState({ nameofdeg1: res.data().nameofdeg1 });
+				this.setState({ boarddeg1: res.data().boarddeg1 });
+				this.setState({ degree1status: res.data().degree1status });
+				this.setState({ regdeg1: res.data().regdeg1 });
+				this.setState({ yopdeg1: res.data().yopdeg1 });
+				this.setState({ marksdeg1: res.data().marksdeg1 });
+				this.setState({ degree2present: res.data().degree2present });
+				this.setState({ nameofdeg2: res.data().nameofdeg2 });
+				this.setState({ boarddeg2: res.data().boarddeg2 });
+				this.setState({ degree2status: res.data().degree2status });
+				this.setState({ regdeg2: res.data().regdeg2 });
+				this.setState({ yopdeg2: res.data().yopdeg2 });
+				this.setState({ marksdeg2: res.data().marksdeg2 });
+
+				console.log("Candidate_Education WORKS", res.data());
+			}).catch = (err) => {
+			console.log("error");
+		};
+	};
 
 	render() {
 		return (
@@ -219,7 +270,7 @@ export default class test extends Component {
 												Candidate Name :
 											</dt>
 											<dd className="mb-4 col-sm-9 font-weight-normal">
-												{this.state.candidateName}
+												{this.state.fname}
 											</dd>
 
 											<dt className="mb-4 col-sm-3 font-weight-bold">
